@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>出目で解説！オイカワのサイコロ自己紹介</title>
+<style>
+  :root { --bg:#0b0b0e; --card:#141419; --accent:#e53935; --text:#f5f6fa; --muted:#a7a9be; }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;}
+  .wrap{max-width:960px;margin:24px auto;padding:16px}
+  header{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  h1{font-size:clamp(20px,3.6vw,28px);margin:0 0 4px}
+  .badge{background:var(--card);border:1px solid #222;padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
+  .notice,.about{background:#111318;border:1px solid #23242c;border-radius:14px;padding:16px;margin:12px 0}
+  .notice h2,.about h2{margin:0 0 8px;font-size:16px;color:var(--muted);letter-spacing:.04em}
+  .notice p,.about p{margin:0 0 8px;line-height:1.8}
+  .notice ul{margin:0;padding-left:18px;color:var(--muted)}
+  .notice li{margin:4px 0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+  .card{background:var(--card);border:1px solid #222;border-radius:14px;padding:14px}
+  .card h2{font-size:14px;margin:0 0 10px;color:var(--muted);letter-spacing:.04em}
+  .select{appearance:none;width:100%;padding:12px;border-radius:10px;border:1px solid #333;background:#0f0f14;color:var(--text);font-size:16px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+  button{border:1px solid #333;background:#1a1a22;color:var(--text);padding:12px 14px;border-radius:12px;font-weight:600;cursor:pointer}
+  button.primary{background:var(--accent);border-color:#c62828}
+  button:active{transform:translateY(1px)}
+  .result{background:#111217;border:1px solid #23232a;border-radius:14px;padding:16px;margin-top:4px}
+  .result h3{margin:0 0 8px;font-size:16px;color:var(--muted)}
+  .result p{margin:0;font-size:18px;line-height:1.7}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
+  footer{margin:28px 0 12px;color:var(--muted);font-size:12px}
+  .pill{display:inline-block;background:#191a22;border:1px solid #2a2b35;border-radius:999px;padding:4px 10px;margin-right:6px;font-size:12px}
+  details.editor{margin-top:12px}
+  details.editor summary{cursor:pointer;color:var(--muted)}
+  .editor-box{background:#0f1116;border:1px dashed #2a2b35;border-radius:12px;padding:12px;margin-top:8px}
+  .editor-box textarea{width:100%;min-height:100px;border-radius:10px;border:1px solid #333;background:#0b0c11;color:var(--text);padding:10px;font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+  .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .tiny{font-size:12px;color:var(--muted)}
+  input[type="file"]{display:none}
+  label.btn{border:1px solid #333;background:#1a1a22;color:var(--text);padding:10px 12px;border-radius:12px;font-weight:600;cursor:pointer}
+</style>
+<body>
+<div class="wrap">
+  <header>
+    <h1>出目で解説！オイカワのサイコロ自己紹介</h1>
+    <span class="badge">体験型 / 3×6×6 = 216通り</span>
+    <span class="badge">A=視点 / B=カテゴリ / C=具体</span>
+  </header>
+
+  <!-- 説明ブロック -->
+  <section class="notice">
+    <h2>サイコロの出目を選んでね</h2>
+    <p>
+      実物サイコロを振ったら、出た<strong>A・B・C</strong>の出目を
+      それぞれ下のプルダウンで選択してください。
+      その後、<em>「解説を表示」</em>ボタンを押すと文章が生成されます。
+    </p>
+    <ul>
+      <li>A＝視点（好き／得意／大事／憧れ／挑戦／推し）</li>
+      <li>B＝カテゴリ（食べ物／場所／趣味／物／習慣／体験）</li>
+      <li>C＝具体（カレー／山梨／映画／歩く／繪／桃）</li>
+    </ul>
+  </section>
+
+  <section class="about">
+    <h2>このアプリについて</h2>
+    <p>
+      これは「サイコロ自己紹介」の<strong>テキスト解説</strong>です。サイコロの組み合わせから、
+      <strong>オイカワの自己紹介の詳細</strong>、さらに小ネタや補足も表示します。
+      216通りの出目＝<strong>一面では語れないオイカワ</strong>を一緒に発見してね。
+    </p>
+  </section>
+
+  <!-- 選択UI -->
+  <div class="grid">
+    <div class="card">
+      <h2>A（視点）</h2>
+      <select class="select" id="selA" aria-label="Aサイコロ"></select>
+    </div>
+    <div class="card">
+      <h2>B（カテゴリ）</h2>
+      <select class="select" id="selB" aria-label="Bサイコロ"></select>
+    </div>
+    <div class="card">
+      <h2>C（具体）</h2>
+      <select class="select" id="selC" aria-label="Cサイコロ"></select>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="btnExplain" class="primary">解説を表示</button>
+  </div>
+
+  <div class="result" id="resultBox" hidden>
+    <h3>生成結果</h3>
+    <p id="resultText"></p>
+    <div class="hint" id="hintText"></div>
+  </div>
+
+
+<script>
+/* ========= データセット ========= */
+const DATASET = {
+  A: [
+    { id: "好き",  label: "好き",   template: "私は{B_C}が好き。" },
+    { id: "得意",  label: "得意",   template: "私は{B_C}が得意。" },
+    { id: "大事",  label: "大事",   template: "私は{B_C}を大事にしている。" },
+    { id: "憧れ",  label: "憧れ",   template: "私は{B_C}に憧れている。" },
+    { id: "挑戦",  label: "挑戦",   template: "私は{B_C}に挑戦している。" },
+    { id: "推し",  label: "推し",   template: "私の推しは{B_C}。" }
+  ],
+  B: [
+    { id: "食べ物", label: "食べ物" },
+    { id: "場所",   label: "場所" },
+    { id: "趣味",   label: "趣味" },
+    { id: "物",     label: "物" },
+    { id: "習慣",   label: "習慣" },
+    { id: "体験",   label: "体験" },
+  ],
+  C: [
+  { id: "カレー", label: "カレー" },
+  { id: "山梨",  label: "山梨"  },
+  { id: "映画",  label: "映画"  },
+  { id: "歩く",  label: "歩く"  },
+  { id: "繪",    label: "繪"    },
+  { id: "桃",    label: "桃"    },
+]
+  
+};
+
+/* ========= 特定組み合わせ辞書（初期サンプル） ========= */
+// キーは「A|B|C」
+const DEFAULT_COMBOS = {
+  
+  "好き|食べ物|カレー": {
+    "text": "腹が減ったらカレーを食べるの好き",
+    "hint": "小中共にカレーのおかわりにはもちろん並んだね"
+  },
+  "好き|食べ物|山梨": {
+    "text": "山梨の食べ物なんでも好き",
+    "hint": "談合坂上りのサービスエリアのかぼちゃほうとう美味いよ"
+  },
+  "好き|食べ物|映画": {
+    "text": "映画館で食べるチュロスが好き",
+    "hint": "チュロス渡された時、なんかテープで補強されてるな〜って思ったら、チュロス折れてた"
+  },
+  "好き|食べ物|歩く": {
+    "text": "食べ歩きするのが好き",
+    "hint": "特に、鎌倉、川越、浅草での食べ歩きが好き"
+  },
+  "好き|食べ物|繪": {
+    "text": "食べ物の絵を見るの好き",
+    "hint": "美味しく食べ物の絵を描ける人、羨ましい"
+  },
+  "好き|食べ物|桃": {
+    "text": "桃を食べるの好き",
+    "hint": "甘くて、ジューシ！桃味の〇〇みたいなのもいい"
+  },
+  "好き|場所|カレー": {
+    "text": "カレー屋さんが好き",
+    "hint": "いい香りがすると思ったら、CoCo壱があったぜ"
+  },
+  "好き|場所|山梨": {
+    "text": "山梨の土地が好き",
+    "hint": "涼しくて、空気も美味しく感じる"
+  },
+  "好き|場所|映画": {
+    "text": "映画館が好き",
+    "hint": "でっかい画面と、爆音！最高！"
+  },
+  "好き|場所|歩く": {
+    "text": "広めの歩道が好き",
+    "hint": "自転車も気にせず、歩行者を避ける心配もなくのびのび歩けるからね"
+  },
+  "好き|場所|繪": {
+    "text": "景色の絵が好き",
+    "hint": "太陽の光の色が建物に反射した世界が色づく絵が好き"
+  },
+  "好き|場所|桃": {
+    "text": "山梨の桃もいいけど、福島の桃も良",
+    "hint": "福島のふるさと納税で桃がたくさん届くよ"
+  },
+  "好き|趣味|カレー": {
+    "text": "無印のレトルトカレー探すの好き",
+    "hint": "やっぱり、バターチキン味買いがち"
+  },
+  "好き|趣味|山梨": {
+    "text": "山梨の小道を歩くのが好き",
+    "hint": "たまにリスとか見かけたりする"
+  },
+  "好き|趣味|映画": {
+    "text": "映画の最中、使用されたレトロな曲の元を探すのが好き",
+    "hint": "隠された名曲を見つけた時が至福"
+  },
+  "好き|趣味|歩く": {
+    "text": "歩きながら音楽を聴くのが趣味",
+    "hint": "その時はまった曲を無限にリピート"
+  },
+  "好き|趣味|繪": {
+    "text": "イラスト描くのは幼少期からの趣味",
+    "hint": "500円玉サイズの落書きするのが好き"
+  },
+  "好き|趣味|桃": {
+    "text": "シャトレーゼの桃味のアイスを見つけて食べるのが趣味",
+    "hint": "なかなか、最寄で見つからなかったり……"
+  },
+  "好き|物|カレー": {
+    "text": "バターチキンカレーが好き！",
+    "hint": "YouTubeでレシピ見てヨーグルトにチキン漬けて作ったり"
+  },
+  "好き|物|山梨": {
+    "text": "山梨の日本酒が好き",
+    "hint": "春鶯囀（しゅんのうてん）が飲みやすかった"
+  },
+  "好き|物|映画": {
+    "text": "ライフ・イズ・ビューティフルが好きな作品",
+    "hint": "戦時中の家族愛や、息子を楽しませる父の姿、全てが美しくて感動する"
+  },
+  "好き|物|歩く": {
+    "text": "クーリッシュを食べながら夜道の散歩が好き",
+    "hint": "クーリッシュは風邪引いた時も美味い"
+  },
+  "好き|物|繪": {
+    "text": "笑顔のイラストが好き",
+    "hint": "いろんな笑顔の形があって、絵でしか見れない表現もあって好き"
+  },
+  "好き|物|桃": {
+    "text": "昔飲んだ桃味のコーラが好き",
+    "hint": "当時のラベルを財布に入れて、とっておいた過去"
+  },
+  "好き|習慣|カレー": {
+    "text": "毎週金曜はカレー系料理の日",
+    "hint": "キーマカレーやこくまろを使った具材ごろごろカレーを作ったり食べたり"
+  },
+  "好き|習慣|山梨": {
+    "text": "山梨に行くならば談合坂SAに寄る",
+    "hint": "上りの方で食べれる味噌カツ丼が美味い"
+  },
+  "好き|習慣|映画": {
+    "text": "【好き|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|習慣|歩く": {
+    "text": "【好き|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|習慣|繪": {
+    "text": "【好き|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|習慣|桃": {
+    "text": "【好き|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|カレー": {
+    "text": "【好き|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|山梨": {
+    "text": "【好き|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|映画": {
+    "text": "【好き|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|歩く": {
+    "text": "【好き|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|繪": {
+    "text": "【好き|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "好き|体験|桃": {
+    "text": "【好き|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|カレー": {
+    "text": "【得意|食べ物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|山梨": {
+    "text": "【得意|食べ物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|映画": {
+    "text": "【得意|食べ物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|歩く": {
+    "text": "【得意|食べ物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|繪": {
+    "text": "【得意|食べ物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|食べ物|桃": {
+    "text": "【得意|食べ物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|カレー": {
+    "text": "【得意|場所|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|山梨": {
+    "text": "【得意|場所|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|映画": {
+    "text": "【得意|場所|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|歩く": {
+    "text": "【得意|場所|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|繪": {
+    "text": "【得意|場所|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|場所|桃": {
+    "text": "【得意|場所|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|カレー": {
+    "text": "【得意|趣味|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|山梨": {
+    "text": "【得意|趣味|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|映画": {
+    "text": "【得意|趣味|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|歩く": {
+    "text": "【得意|趣味|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|繪": {
+    "text": "【得意|趣味|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|趣味|桃": {
+    "text": "【得意|趣味|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|カレー": {
+    "text": "【得意|物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|山梨": {
+    "text": "【得意|物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|映画": {
+    "text": "【得意|物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|歩く": {
+    "text": "【得意|物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|繪": {
+    "text": "【得意|物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|物|桃": {
+    "text": "【得意|物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|カレー": {
+    "text": "【得意|習慣|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|山梨": {
+    "text": "【得意|習慣|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|映画": {
+    "text": "【得意|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|歩く": {
+    "text": "【得意|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|繪": {
+    "text": "【得意|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|習慣|桃": {
+    "text": "【得意|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|カレー": {
+    "text": "【得意|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|山梨": {
+    "text": "【得意|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|映画": {
+    "text": "【得意|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|歩く": {
+    "text": "【得意|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|繪": {
+    "text": "【得意|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "得意|体験|桃": {
+    "text": "【得意|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|カレー": {
+    "text": "【大事|食べ物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|山梨": {
+    "text": "【大事|食べ物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|映画": {
+    "text": "【大事|食べ物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|歩く": {
+    "text": "【大事|食べ物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|繪": {
+    "text": "【大事|食べ物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|食べ物|桃": {
+    "text": "【大事|食べ物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|カレー": {
+    "text": "【大事|場所|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|山梨": {
+    "text": "【大事|場所|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|映画": {
+    "text": "【大事|場所|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|歩く": {
+    "text": "【大事|場所|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|繪": {
+    "text": "【大事|場所|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|場所|桃": {
+    "text": "【大事|場所|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|カレー": {
+    "text": "【大事|趣味|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|山梨": {
+    "text": "【大事|趣味|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|映画": {
+    "text": "【大事|趣味|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|歩く": {
+    "text": "【大事|趣味|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|繪": {
+    "text": "【大事|趣味|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|趣味|桃": {
+    "text": "【大事|趣味|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|カレー": {
+    "text": "【大事|物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|山梨": {
+    "text": "【大事|物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|映画": {
+    "text": "【大事|物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|歩く": {
+    "text": "【大事|物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|繪": {
+    "text": "【大事|物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|物|桃": {
+    "text": "【大事|物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|カレー": {
+    "text": "【大事|習慣|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|山梨": {
+    "text": "【大事|習慣|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|映画": {
+    "text": "【大事|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|歩く": {
+    "text": "【大事|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|繪": {
+    "text": "【大事|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|習慣|桃": {
+    "text": "【大事|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|カレー": {
+    "text": "【大事|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|山梨": {
+    "text": "【大事|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|映画": {
+    "text": "【大事|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|歩く": {
+    "text": "【大事|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|繪": {
+    "text": "【大事|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "大事|体験|桃": {
+    "text": "【大事|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|カレー": {
+    "text": "【憧れ|食べ物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|山梨": {
+    "text": "【憧れ|食べ物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|映画": {
+    "text": "【憧れ|食べ物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|歩く": {
+    "text": "【憧れ|食べ物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|繪": {
+    "text": "【憧れ|食べ物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|食べ物|桃": {
+    "text": "【憧れ|食べ物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|カレー": {
+    "text": "【憧れ|場所|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|山梨": {
+    "text": "【憧れ|場所|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|映画": {
+    "text": "【憧れ|場所|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|歩く": {
+    "text": "【憧れ|場所|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|繪": {
+    "text": "【憧れ|場所|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|場所|桃": {
+    "text": "【憧れ|場所|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|カレー": {
+    "text": "【憧れ|趣味|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|山梨": {
+    "text": "【憧れ|趣味|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|映画": {
+    "text": "【憧れ|趣味|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|歩く": {
+    "text": "【憧れ|趣味|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|繪": {
+    "text": "【憧れ|趣味|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|趣味|桃": {
+    "text": "【憧れ|趣味|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|カレー": {
+    "text": "【憧れ|物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|山梨": {
+    "text": "【憧れ|物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|映画": {
+    "text": "【憧れ|物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|歩く": {
+    "text": "【憧れ|物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|繪": {
+    "text": "【憧れ|物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|物|桃": {
+    "text": "【憧れ|物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|カレー": {
+    "text": "【憧れ|習慣|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|山梨": {
+    "text": "【憧れ|習慣|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|映画": {
+    "text": "【憧れ|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|歩く": {
+    "text": "【憧れ|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|繪": {
+    "text": "【憧れ|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|習慣|桃": {
+    "text": "【憧れ|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|カレー": {
+    "text": "【憧れ|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|山梨": {
+    "text": "【憧れ|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|映画": {
+    "text": "【憧れ|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|歩く": {
+    "text": "【憧れ|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|繪": {
+    "text": "【憧れ|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "憧れ|体験|桃": {
+    "text": "【憧れ|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|カレー": {
+    "text": "【挑戦|食べ物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|山梨": {
+    "text": "【挑戦|食べ物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|映画": {
+    "text": "【挑戦|食べ物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|歩く": {
+    "text": "【挑戦|食べ物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|繪": {
+    "text": "【挑戦|食べ物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|食べ物|桃": {
+    "text": "【挑戦|食べ物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|カレー": {
+    "text": "【挑戦|場所|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|山梨": {
+    "text": "【挑戦|場所|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|映画": {
+    "text": "【挑戦|場所|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|歩く": {
+    "text": "【挑戦|場所|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|繪": {
+    "text": "【挑戦|場所|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|場所|桃": {
+    "text": "【挑戦|場所|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|カレー": {
+    "text": "【挑戦|趣味|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|山梨": {
+    "text": "【挑戦|趣味|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|映画": {
+    "text": "【挑戦|趣味|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|歩く": {
+    "text": "【挑戦|趣味|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|繪": {
+    "text": "【挑戦|趣味|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|趣味|桃": {
+    "text": "【挑戦|趣味|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|カレー": {
+    "text": "【挑戦|物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|山梨": {
+    "text": "【挑戦|物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|映画": {
+    "text": "【挑戦|物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|歩く": {
+    "text": "【挑戦|物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|繪": {
+    "text": "【挑戦|物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|物|桃": {
+    "text": "【挑戦|物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|カレー": {
+    "text": "【挑戦|習慣|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|山梨": {
+    "text": "【挑戦|習慣|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|映画": {
+    "text": "【挑戦|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|歩く": {
+    "text": "【挑戦|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|繪": {
+    "text": "【挑戦|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|習慣|桃": {
+    "text": "【挑戦|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|カレー": {
+    "text": "【挑戦|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|山梨": {
+    "text": "【挑戦|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|映画": {
+    "text": "【挑戦|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|歩く": {
+    "text": "【挑戦|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|繪": {
+    "text": "【挑戦|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "挑戦|体験|桃": {
+    "text": "【挑戦|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|カレー": {
+    "text": "【推し|食べ物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|山梨": {
+    "text": "【推し|食べ物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|映画": {
+    "text": "【推し|食べ物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|歩く": {
+    "text": "【推し|食べ物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|繪": {
+    "text": "【推し|食べ物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|食べ物|桃": {
+    "text": "【推し|食べ物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|カレー": {
+    "text": "【推し|場所|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|山梨": {
+    "text": "【推し|場所|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|映画": {
+    "text": "【推し|場所|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|歩く": {
+    "text": "【推し|場所|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|繪": {
+    "text": "【推し|場所|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|場所|桃": {
+    "text": "【推し|場所|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|カレー": {
+    "text": "【推し|趣味|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|山梨": {
+    "text": "【推し|趣味|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|映画": {
+    "text": "【推し|趣味|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|歩く": {
+    "text": "【推し|趣味|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|繪": {
+    "text": "【推し|趣味|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|趣味|桃": {
+    "text": "【推し|趣味|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|カレー": {
+    "text": "【推し|物|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|山梨": {
+    "text": "【推し|物|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|映画": {
+    "text": "【推し|物|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|歩く": {
+    "text": "【推し|物|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|繪": {
+    "text": "【推し|物|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|物|桃": {
+    "text": "【推し|物|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|カレー": {
+    "text": "【推し|習慣|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|山梨": {
+    "text": "【推し|習慣|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|映画": {
+    "text": "【推し|習慣|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|歩く": {
+    "text": "【推し|習慣|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|繪": {
+    "text": "【推し|習慣|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|習慣|桃": {
+    "text": "【推し|習慣|桃】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|カレー": {
+    "text": "【推し|体験|カレー】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|山梨": {
+    "text": "【推し|体験|山梨】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|映画": {
+    "text": "【推し|体験|映画】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|歩く": {
+    "text": "【推し|体験|歩く】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|繪": {
+    "text": "【推し|体験|繪】の文章を書く",
+    "hint": "補足をここに"
+  },
+  "推し|体験|桃": {
+    "text": "【推し|体験|桃】の文章を書く",
+    "hint": "補足をここに"
+  }
+
+
+};
+
+/* ========= コンボ辞書のロード/保存 ========= */
+const LS_KEY = "dice_combos_v1";
+function loadCombos(){
+  let user = {};
+  try{ user = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }catch(e){ user = {}; }
+  // ユーザー定義が優先（上書き）
+  return { ...DEFAULT_COMBOS, ...user };
+}
+let COMBOS = loadCombos();
+function saveCombo(key, text, hint){
+  const current = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+  current[key] = { text, hint };
+  localStorage.setItem(LS_KEY, JSON.stringify(current));
+  COMBOS = loadCombos();
+}
+
+/* ========= UI生成 ========= */
+const selA = document.getElementById('selA');
+const selB = document.getElementById('selB');
+const selC = document.getElementById('selC');
+const resBox = document.getElementById('resultBox');
+const resTxt  = document.getElementById('resultText');
+const hintTxt = document.getElementById('hintText');
+const nowKey  = document.getElementById('nowKey');
+const editText= document.getElementById('editText');
+const editHint= document.getElementById('editHint');
+
+function fillSelect(el, options){
+  el.innerHTML = options.map(o=>`<option value="${o.id}">${o.label}</option>`).join('');
+}
+fillSelect(selA, DATASET.A);
+fillSelect(selB, DATASET.B);
+fillSelect(selC, DATASET.C);
+
+function byId(arr, id){ return arr.find(x=>x.id===id); }
+function currentKey(){ return `${selA.value}|${selB.value}|${selC.value}`; }
+
+function updateEditorKey(){
+  const key = currentKey();
+  nowKey.textContent = key;
+  const combo = COMBOS[key] || { text: "", hint: "" };
+  editText.value = combo.text || "";
+  editHint.value = combo.hint || "";
+}
+['change','input'].forEach(ev=>{
+  selA.addEventListener(ev, updateEditorKey);
+  selB.addEventListener(ev, updateEditorKey);
+  selC.addEventListener(ev, updateEditorKey);
+});
+
+function generate(){
+  const a = byId(DATASET.A, selA.value);
+  const b = byId(DATASET.B, selB.value);
+  const c = byId(DATASET.C, selC.value);
+  const key = `${a.id}|${b.id}|${c.id}`;
+  const combo = COMBOS[key];
+  let sentence = ""; let hint = "";
+  if (combo) {
+    sentence = combo.text; hint = combo.hint || "";
+  } else {
+    const bc = bcConnector(b, c);
+    sentence = a.template.replace("{B_C}", bc);
+    hint = pickHint(c);
+  }
+  resTxt.textContent = sentence;
+  hintTxt.textContent = hint;
+  resBox.hidden = false;
+}
+function roll(){
+  selA.selectedIndex = Math.floor(Math.random()*DATASET.A.length);
+  selB.selectedIndex = Math.floor(Math.random()*DATASET.B.length);
+  selC.selectedIndex = Math.floor(Math.random()*DATASET.C.length);
+  updateEditorKey();
+  generate();
+}
+
+document.getElementById('btnExplain').addEventListener('click', generate);
+document.getElementById('btnRoll').addEventListener('click', roll);
+document.getElementById('btnCopy').addEventListener('click', async ()=>{
+  const a = selA.value, b= selB.value, c= selC.value;
+  const text = `A:${a} / B:${b} / C:${c}\n${resTxt.textContent}\n${hintTxt.textContent ? "補足: "+hintTxt.textContent : ""}`;
+  try{ await navigator.clipboard.writeText(text); alert("コピーしたよ！"); }
+  catch(e){ alert("コピーできなかったので手動で選択してね！"); }
+});
+
+document.getElementById('btnSaveCombo').addEventListener('click', ()=>{
+  const key = currentKey();
+  saveCombo(key, editText.value.trim(), editHint.value.trim());
+  alert(`保存しました：${key}`);
+});
+
+document.getElementById('btnExport').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(COMBOS, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'combos.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('fileImport').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const json = JSON.parse(reader.result);
+      localStorage.setItem(LS_KEY, JSON.stringify(json));
+      COMBOS = loadCombos();
+      updateEditorKey();
+      alert('読み込みました！');
+    }catch(err){
+      alert('JSONの読み込みに失敗しました…');
+    }
+  };
+  reader.readAsText(file);
+});
+
+// 初期表示
+updateEditorKey();
+</script>
+</body>
+</html>
